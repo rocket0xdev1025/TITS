@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TITS | Texas Institute Of Technology and Science</title>
+  <meta name="description" content="Texas Institute of Technology and Science is here to build the future, break limits, and unleash tech chaos!">
+  <meta name="theme-color" content="#03101c">
+  <link rel="icon" href="logo.png" type="image/png">
+  <link rel="preload" as="image" href="banner.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800&family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            void: "#03101c",
+            neon: "#3ad7ff",
+            gold: "#e7c15a",
+            ink: "#d7ecff"
+          },
+          fontFamily: {
+            display: ["Orbitron", "Segoe UI", "sans-serif"],
+            sans: ["Sora", "Segoe UI", "sans-serif"]
+          },
+          boxShadow: {
+            glow: "0 0 32px rgba(58, 215, 255, 0.45)",
+            gold: "0 0 24px rgba(231, 193, 90, 0.35)"
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    :root {
+      --mx: 50vw;
+      --my: 30vh;
+    }
+
+    ::selection {
+      background: #3ad7ff;
+      color: #03101c;
+    }
+
+    ::-webkit-scrollbar { width: 10px; }
+    ::-webkit-scrollbar-track { background: #03101c; }
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(#3ad7ff, #0b6f99);
+      border-radius: 99px;
+    }
+
+    body {
+      font-family: Sora, "Segoe UI", sans-serif;
+      background: #03101c;
+      color: #d7ecff;
+    }
+
+    .stars,
+    .stars-far {
+      background-repeat: repeat;
+      mix-blend-mode: screen;
+      pointer-events: none;
+    }
+
+    .stars {
+      background-image:
+        radial-gradient(1.5px 1.5px at 8% 16%, #fff 50%, transparent 52%),
+        radial-gradient(1px 1px at 18% 72%, #fff 50%, transparent 52%),
+        radial-gradient(1.5px 1.5px at 28% 28%, #e7c15a 50%, transparent 52%),
+        radial-gradient(1px 1px at 42% 84%, #fff 50%, transparent 52%),
+        radial-gradient(1.5px 1.5px at 56% 18%, #fff 50%, transparent 52%),
+        radial-gradient(1px 1px at 67% 62%, #bff4ff 50%, transparent 52%),
+        radial-gradient(1.5px 1.5px at 78% 36%, #fff 50%, transparent 52%),
+        radial-gradient(1px 1px at 88% 78%, #fff 50%, transparent 52%),
+        radial-gradient(1px 1px at 94% 12%, #e7c15a 50%, transparent 52%),
+        radial-gradient(1.5px 1.5px at 12% 48%, #fff 50%, transparent 52%),
+        radial-gradient(1px 1px at 36% 52%, #fff 50%, transparent 52%),
+        radial-gradient(1px 1px at 73% 90%, #fff 50%, transparent 52%);
+      animation: drift 90s linear infinite;
+    }
+
+    .stars-far {
+      opacity: 0.65;
+      background-image:
+        radial-gradient(1px 1px at 6% 40%, #fff 50%, transparent 52%),
+        radial-gradient(1px 1px at 22% 10%, #fff 50%, transparent 52%),
+        radial-gradient(1px 1px at 33% 66%, #fff 50%, transparent 52%),
+        radial-gradient(1px 1px at 48% 34%, #fff 50%, transparent 52%),
+        radial-gradient(1px 1px at 61% 8%, #fff 50%, transparent 52%),
+        radial-gradient(1px 1px at 70% 48%, #fff 50%, transparent 52%),
+        radial-gradient(1px 1px at 84% 22%, #fff 50%, transparent 52%),
+        radial-gradient(1px 1px at 92% 58%, #fff 50%, transparent 52%),
+        radial-gradient(1px 1px at 15% 88%, #fff 50%, transparent 52%),
+        radial-gradient(1px 1px at 52% 92%, #fff 50%, transparent 52%);
+      animation: drift 140s linear infinite reverse;
+    }
+
+    .shooting-star {
+      position: absolute;
+      height: 2px;
+      width: 140px;
+      background: linear-gradient(90deg, transparent, #fff, transparent);
+      opacity: 0;
+      transform: rotate(-18deg);
+      animation: shoot 8.5s ease-in infinite;
+    }
+
+    .spotlight {
+      background: radial-gradient(520px circle at var(--mx) var(--my), rgba(58, 215, 255, 0.16), transparent 42%);
+    }
+
+    .glow-frame {
+      background: linear-gradient(135deg, rgba(58, 215, 255, 0.95), rgba(231, 193, 90, 0.55) 45%, rgba(58, 215, 255, 0.25));
+      box-shadow: 0 20px 80px rgba(0, 0, 0, 0.35), 0 0 40px rgba(58, 215, 255, 0.18);
+    }
+
+    .hud {
+      position: relative;
+    }
+
+    .hud::before,
+    .hud::after {
+      content: "";
+      position: absolute;
+      width: 18px;
+      height: 18px;
+      border: 2px solid rgba(58, 215, 255, 0.85);
+      pointer-events: none;
+    }
+
+    .hud::before {
+      top: 10px;
+      left: 10px;
+      border-right: 0;
+      border-bottom: 0;
+    }
+
+    .hud::after {
+      right: 10px;
+      bottom: 10px;
+      border-left: 0;
+      border-top: 0;
+    }
+
+    .wordmark {
+      background: linear-gradient(180deg, #ffffff 10%, #d9f7ff 42%, #3ad7ff 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      filter: drop-shadow(0 0 18px rgba(58, 215, 255, 0.55));
+    }
+
+    .orbit,
+    .orbit-b {
+      position: absolute;
+      border-radius: 9999px;
+      pointer-events: none;
+    }
+
+    .orbit {
+      inset: -8%;
+      border: 1px dashed rgba(58, 215, 255, 0.7);
+      animation: spin 22s linear infinite;
+    }
+
+    .orbit::after,
+    .orbit-b::after {
+      content: "";
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      border-radius: 9999px;
+      left: 50%;
+      top: -6px;
+    }
+
+    .orbit::after {
+      background: #3ad7ff;
+      box-shadow: 0 0 14px #3ad7ff;
+    }
+
+    .orbit-b {
+      inset: -18%;
+      border: 1px solid rgba(231, 193, 90, 0.55);
+      animation: spin 36s linear infinite reverse;
+    }
+
+    .orbit-b::after {
+      background: #e7c15a;
+      box-shadow: 0 0 14px #e7c15a;
+      top: auto;
+      bottom: -6px;
+    }
+
+    .marquee-track {
+      animation: marquee 32s linear infinite;
+    }
+
+    .btn-buy {
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(180deg, #7ae7ff 0%, #14b7ef 45%, #0878c8 100%);
+      color: #03101c;
+      box-shadow: 0 0 24px rgba(58, 215, 255, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.7);
+    }
+
+    .btn-buy::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(110deg, transparent 30%, rgba(255, 255, 255, 0.55) 48%, transparent 66%);
+      transform: translateX(-120%);
+      animation: shine 3.8s ease-in-out infinite;
+    }
+
+    .btn-chart {
+      background: rgba(3, 16, 28, 0.55);
+      color: #e9f9ff;
+      border: 1px solid rgba(58, 215, 255, 0.7);
+      box-shadow: inset 0 0 18px rgba(58, 215, 255, 0.12);
+    }
+
+    .btn-chart:hover,
+    .btn-buy:hover {
+      transform: translateY(-2px);
+    }
+
+    .step-index {
+      text-shadow: 0 0 18px rgba(58, 215, 255, 0.45);
+    }
+
+    .planet {
+      background:
+        radial-gradient(circle at 35% 35%, rgba(122, 231, 255, 0.35), rgba(8, 40, 78, 0.2) 42%, transparent 68%);
+      box-shadow: inset -30px -20px 60px rgba(0, 0, 0, 0.35), 0 0 80px rgba(58, 215, 255, 0.15);
+    }
+
+    section { scroll-margin-top: 6rem; }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes drift {
+      from { background-position: 0 0; }
+      to { background-position: 0 -240px; }
+    }
+
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    @keyframes shine {
+      0%, 55% { transform: translateX(-120%); }
+      80%, 100% { transform: translateX(120%); }
+    }
+
+    @keyframes shoot {
+      0% { opacity: 0; transform: translate3d(0, 0, 0) rotate(-18deg); }
+      8% { opacity: 1; }
+      22% { opacity: 0; transform: translate3d(-280px, 90px, 0) rotate(-18deg); }
+      100% { opacity: 0; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation: none !important;
+        transition: none !important;
+      }
+    }
+  </style>
+</head>
+<body class="min-h-screen antialiased">
+  <img src="banner.jpg" alt="" class="pointer-events-none fixed inset-0 -z-30 h-full w-full object-cover object-center">
+  <div class="pointer-events-none fixed inset-0 -z-20" style="background:
+    linear-gradient(180deg, rgba(2,8,18,0.45) 0%, rgba(2,8,18,0.12) 18%, rgba(2,10,24,0.08) 46%, rgba(2,8,18,0.62) 78%, rgba(1,6,14,0.88) 100%),
+    radial-gradient(ellipse at center, transparent 30%, rgba(0,0,0,0.38) 100%);"></div>
+  <div class="stars pointer-events-none fixed inset-0 -z-10"></div>
+  <div class="stars-far pointer-events-none fixed inset-0 -z-10"></div>
+  <div class="shooting-star left-[78%] top-[14%]"></div>
+  <div class="shooting-star left-[30%] top-[42%]" style="animation-delay: 3.4s;"></div>
+  <div class="spotlight pointer-events-none fixed inset-0 z-0"></div>
+
+  <a href="#mission" class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[80] focus:rounded-md focus:bg-neon focus:px-3 focus:py-2 focus:text-void">Skip to content</a>
+
+  <header class="fixed inset-x-0 top-0 z-50 border-b border-neon/20 bg-[#03101c]/55 backdrop-blur-xl">
+    <div class="mx-auto flex max-w-6xl flex-wrap items-center gap-3 px-4 py-3 md:px-6">
+      <a href="#top" class="flex items-center gap-3">
+        <img src="logo.png" alt="TITS logo" class="h-11 w-11 rounded-xl object-cover ring-2 ring-neon/80 shadow-glow">
+        <span class="font-display text-lg tracking-[0.22em] text-white">TITS</span>
+      </a>
+      <nav class="order-3 flex w-full items-center gap-5 text-xs uppercase tracking-[0.22em] text-ink/80 md:order-none md:ml-8 md:w-auto md:text-[13px]">
+        <a href="#mission" class="transition hover:text-neon">Mission</a>
+        <a href="#how-to-buy" class="transition hover:text-neon">How to Buy</a>
+        <a href="#chart" class="transition hover:text-neon">Chart</a>
+      </nav>
+      <div class="ml-auto flex items-center gap-2">
+        <a href="https://t.me/titselon" target="_blank" rel="noopener noreferrer" aria-label="Telegram" class="transition hover:scale-110">
+          <img src="tg.png" alt="" class="h-10 w-10 rounded-full object-cover shadow-glow">
+        </a>
+        <a href="https://x.com/titselon" target="_blank" rel="noopener noreferrer" aria-label="X" class="rounded-full ring-2 ring-white/20 transition hover:scale-110 hover:ring-neon">
+          <img src="x.png" alt="" class="h-10 w-10 rounded-full object-cover">
+        </a>
+        <a href="https://app.uniswap.org/swap?chain=robinhood&outputCurrency=TBA" target="_blank" rel="noopener noreferrer" class="btn-buy hidden rounded-full px-4 py-2 font-display text-xs font-bold tracking-[0.18em] sm:inline-flex">BUY NOW</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="relative flex min-h-screen items-end px-4 pb-8 pt-28 md:px-6 md:pb-12">
+      <p class="pointer-events-none absolute left-4 top-24 hidden font-display text-[11px] uppercase tracking-[0.35em] text-white/80 md:block md:left-8" style="text-shadow: 0 2px 12px rgba(0,0,0,0.8);">Sys // TITS-01<br><span class="text-gold">Orbital campus</span></p>
+      <p class="pointer-events-none absolute right-4 top-24 hidden text-right font-display text-[11px] uppercase tracking-[0.35em] text-white/80 md:block md:right-8" style="text-shadow: 0 2px 12px rgba(0,0,0,0.8);">Chain // Robinhood<br><span class="text-gold">Signal locked</span></p>
+
+      <div class="glow-frame mx-auto w-full max-w-6xl rounded-[28px] p-px">
+        <div class="hud rounded-[27px] bg-[#061321]/80 p-5 backdrop-blur-md sm:p-7 md:p-9">
+          <div class="flex flex-col gap-6 md:flex-row md:items-center">
+            <div class="relative mx-auto w-40 shrink-0 sm:w-44 md:mx-0">
+              <div class="orbit"></div>
+              <div class="orbit-b"></div>
+              <img src="logo.png" alt="Texas Institute Of Technology and Science emblem" class="relative aspect-square w-full rounded-3xl object-cover ring-2 ring-neon shadow-glow">
+            </div>
+            <div class="min-w-0 flex-1 text-center md:text-left">
+              <p class="font-display text-[11px] uppercase tracking-[0.42em] text-gold">Symbol · TITS</p>
+              <h1 class="wordmark mt-2 font-display text-4xl font-extrabold leading-none sm:text-5xl lg:text-6xl">TITS</h1>
+              <p class="mt-3 font-display text-sm uppercase tracking-[0.18em] text-white sm:text-base md:tracking-[0.22em]">Texas Institute Of Technology and Science</p>
+              <p class="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-ink sm:text-lg md:mx-0">Texas Institute of Technology and Science is here to build the future, break limits, and unleash tech chaos!</p>
+            </div>
+          </div>
+
+          <div class="mt-6 grid gap-3 lg:grid-cols-[1.4fr_auto] lg:items-center">
+            <div class="flex items-center gap-3 rounded-2xl border border-neon/30 bg-black/40 px-4 py-3">
+              <div class="min-w-0 flex-1 text-left">
+                <p class="font-display text-[10px] uppercase tracking-[0.32em] text-gold">Contract · Robinhood</p>
+                <p id="ca-value" class="truncate font-mono text-lg tracking-wide text-white">TBA</p>
+              </div>
+              <button id="copy-ca" type="button" class="shrink-0 rounded-xl border border-gold/70 bg-gold/10 px-4 py-3 font-display text-xs font-bold tracking-[0.18em] text-gold transition hover:bg-gold hover:text-void">COPY CA</button>
+            </div>
+            <div class="flex flex-col gap-3 sm:flex-row">
+              <a href="https://app.uniswap.org/swap?chain=robinhood&outputCurrency=TBA" target="_blank" rel="noopener noreferrer" class="btn-buy inline-flex flex-1 items-center justify-center rounded-2xl px-6 py-3.5 font-display text-sm font-extrabold tracking-[0.2em]">BUY NOW</a>
+              <a href="https://dexscreener.com/robinhood/TBA" target="_blank" rel="noopener noreferrer" class="btn-chart inline-flex flex-1 items-center justify-center rounded-2xl px-6 py-3.5 font-display text-sm font-bold tracking-[0.2em] transition hover:bg-neon/10">CHART</a>
+            </div>
+          </div>
+          <p id="copy-status" class="mt-3 min-h-5 text-center font-display text-[11px] uppercase tracking-[0.28em] text-neon md:text-left" aria-live="polite"></p>
+        </div>
+      </div>
+    </section>
+
+    <div class="relative z-10 overflow-hidden border-y border-neon/25 bg-[#03101c]/75" aria-hidden="true">
+      <div class="marquee-track flex w-max gap-8 py-3 font-display text-[11px] uppercase tracking-[0.42em] text-neon">
+        <span>Build the future</span><span class="text-gold">✦</span>
+        <span>Break limits</span><span class="text-gold">✦</span>
+        <span>Unleash tech chaos</span><span class="text-gold">✦</span>
+        <span>$TITS</span><span class="text-gold">✦</span>
+        <span>Robinhood ETH</span><span class="text-gold">✦</span>
+        <span>Build the future</span><span class="text-gold">✦</span>
+        <span>Break limits</span><span class="text-gold">✦</span>
+        <span>Unleash tech chaos</span><span class="text-gold">✦</span>
+        <span>$TITS</span><span class="text-gold">✦</span>
+        <span>Robinhood ETH</span><span class="text-gold">✦</span>
+      </div>
+    </div>
+
+    <section id="mission" class="relative z-10 px-4 py-20 md:px-6 md:py-28">
+      <div class="mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-[0.9fr_1.1fr]">
+        <div class="relative mx-auto w-full max-w-sm">
+          <div class="planet absolute -left-10 top-6 h-40 w-40 rounded-full blur-[1px]"></div>
+          <div class="absolute -right-6 bottom-0 h-24 w-24 rounded-full border border-gold/40"></div>
+          <div class="absolute -right-2 bottom-6 h-16 w-16 rounded-full border border-dashed border-neon/50"></div>
+          <img src="logo.png" alt="TITS logo" class="relative w-full rounded-[32px] object-cover shadow-glow ring-2 ring-neon/70">
+        </div>
+        <div>
+          <p class="font-display text-xs uppercase tracking-[0.4em] text-gold">The mission</p>
+          <h2 class="mt-3 font-display text-3xl leading-tight text-white sm:text-4xl">A campus built past the edge of the map.</h2>
+          <p class="mt-5 text-lg leading-relaxed text-ink">Texas Institute of Technology and Science is here to build the future, break limits, and unleash tech chaos!</p>
+          <p class="mt-4 leading-relaxed text-white/75">Admissions are a wallet and Robinhood ETH. The diploma is $TITS. The sky over campus is not a ceiling — it is the next lab.</p>
+          <dl class="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-4">
+            <div class="rounded-2xl border border-neon/25 bg-[#061321]/75 p-3 backdrop-blur-sm">
+              <dt class="font-display text-[10px] uppercase tracking-[0.22em] text-gold">Symbol</dt>
+              <dd class="mt-1 font-display text-lg text-white">TITS</dd>
+            </div>
+            <div class="rounded-2xl border border-neon/25 bg-[#061321]/75 p-3 backdrop-blur-sm">
+              <dt class="font-display text-[10px] uppercase tracking-[0.22em] text-gold">Chain</dt>
+              <dd class="mt-1 font-display text-lg text-white">Robinhood</dd>
+            </div>
+            <div class="rounded-2xl border border-neon/25 bg-[#061321]/75 p-3 backdrop-blur-sm">
+              <dt class="font-display text-[10px] uppercase tracking-[0.22em] text-gold">Pay with</dt>
+              <dd class="mt-1 font-display text-lg text-white">ETH</dd>
+            </div>
+            <div class="rounded-2xl border border-neon/25 bg-[#061321]/75 p-3 backdrop-blur-sm">
+              <dt class="font-display text-[10px] uppercase tracking-[0.22em] text-gold">Contract</dt>
+              <dd class="mt-1 font-display text-lg text-white">TBA</dd>
+            </div>
+          </dl>
+        </div>
+      </div>
+
+      <div class="mx-auto mt-14 grid max-w-6xl gap-4 md:grid-cols-3">
+        <article class="hud rounded-3xl border border-neon/25 bg-[#061321]/75 p-6 backdrop-blur-md">
+          <p class="font-display text-xs tracking-[0.32em] text-neon">01</p>
+          <h3 class="mt-3 font-display text-xl text-white">Build the future</h3>
+          <p class="mt-3 text-sm leading-relaxed text-white/75">Rockets on the lawn. A campus aimed at orbit. $TITS is the institute’s fuel for whatever gets invented next.</p>
+        </article>
+        <article class="hud rounded-3xl border border-gold/30 bg-[#061321]/75 p-6 backdrop-blur-md">
+          <p class="font-display text-xs tracking-[0.32em] text-gold">02</p>
+          <h3 class="mt-3 font-display text-xl text-white">Break limits</h3>
+          <p class="mt-3 text-sm leading-relaxed text-white/75">No velvet rope. Robinhood Chain, a wallet, and Robinhood ETH are the whole entrance exam.</p>
+        </article>
+        <article class="hud rounded-3xl border border-neon/25 bg-[#061321]/75 p-6 backdrop-blur-md">
+          <p class="font-display text-xs tracking-[0.32em] text-neon">03</p>
+          <h3 class="mt-3 font-display text-xl text-white">Unleash tech chaos</h3>
+          <p class="mt-3 text-sm leading-relaxed text-white/75">The syllabus is velocity. Swap in, watch the chart, and let the experiment get loud.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="how-to-buy" class="relative z-10 overflow-hidden px-4 py-20 md:px-6 md:py-28">
+      <div class="pointer-events-none absolute -right-24 top-10 h-[420px] w-[420px] rounded-full border border-neon/20"></div>
+      <div class="pointer-events-none absolute -right-8 top-24 h-72 w-72 rounded-full border border-dashed border-gold/30"></div>
+      <div class="pointer-events-none absolute -left-24 bottom-0 h-64 w-64 rounded-full bg-neon/10 blur-3xl"></div>
+
+      <div class="relative mx-auto max-w-6xl">
+        <p class="font-display text-xs uppercase tracking-[0.4em] text-gold">Enrollment</p>
+        <h2 class="mt-3 font-display text-3xl text-white sm:text-5xl">How to Buy</h2>
+        <p class="mt-4 max-w-2xl text-lg leading-relaxed text-ink">Four steps. You buy $TITS with Robinhood ETH on Robinhood Chain. Uniswap handles the swap.</p>
+
+        <ol class="relative mt-12 grid gap-5 md:grid-cols-4">
+          <li class="hud rounded-3xl border border-neon/30 bg-[#061321]/80 p-5 backdrop-blur-md">
+            <p class="step-index font-display text-4xl text-neon">01</p>
+            <h3 class="mt-4 font-display text-lg text-white">Create your wallet</h3>
+            <p class="mt-3 text-sm leading-relaxed text-white/75">Install MetaMask or another wallet that can reach Robinhood Chain. This wallet holds your Robinhood ETH and your $TITS.</p>
+          </li>
+          <li class="hud rounded-3xl border border-neon/30 bg-[#061321]/80 p-5 backdrop-blur-md">
+            <p class="step-index font-display text-4xl text-neon">02</p>
+            <h3 class="mt-4 font-display text-lg text-white">Get Robinhood ETH</h3>
+            <p class="mt-3 text-sm leading-relaxed text-white/75">Fund the wallet with ETH on Robinhood Chain. Robinhood ETH is what you swap for $TITS and what pays the gas.</p>
+          </li>
+          <li class="hud rounded-3xl border border-neon/30 bg-[#061321]/80 p-5 backdrop-blur-md">
+            <p class="step-index font-display text-4xl text-neon">03</p>
+            <h3 class="mt-4 font-display text-lg text-white">Open the swap</h3>
+            <p class="mt-3 text-sm leading-relaxed text-white/75">Hit Buy Now to open Uniswap on Robinhood with $TITS as the token you receive. Connect, stay on Robinhood, and paste the contract if it is not filled in.</p>
+          </li>
+          <li class="hud rounded-3xl border border-gold/40 bg-[#061321]/80 p-5 backdrop-blur-md">
+            <p class="step-index font-display text-4xl text-gold">04</p>
+            <h3 class="mt-4 font-display text-lg text-white">Swap and confirm</h3>
+            <p class="mt-3 text-sm leading-relaxed text-white/75">Enter how much Robinhood ETH to spend, check the rate, and confirm in your wallet. When it lands, you are enrolled.</p>
+          </li>
+        </ol>
+
+        <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+          <a href="https://app.uniswap.org/swap?chain=robinhood&outputCurrency=TBA" target="_blank" rel="noopener noreferrer" class="btn-buy inline-flex items-center justify-center rounded-2xl px-8 py-4 font-display text-sm font-extrabold tracking-[0.2em]">BUY NOW</a>
+          <a href="https://dexscreener.com/robinhood/TBA" target="_blank" rel="noopener noreferrer" class="btn-chart inline-flex items-center justify-center rounded-2xl px-8 py-4 font-display text-sm font-bold tracking-[0.2em]">CHART</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="chart" class="relative z-10 px-4 pb-24 md:px-6">
+      <div class="mx-auto max-w-6xl">
+        <div class="mb-6 flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
+          <div>
+            <p class="font-display text-xs uppercase tracking-[0.4em] text-gold">Observatory</p>
+            <h2 class="mt-3 font-display text-3xl text-white sm:text-4xl">Live chart</h2>
+            <p class="mt-3 max-w-xl text-white/75">Dexscreener, embedded. $TITS on Robinhood, updating in orbit.</p>
+          </div>
+          <a href="https://dexscreener.com/robinhood/TBA" target="_blank" rel="noopener noreferrer" class="btn-chart inline-flex items-center justify-center rounded-2xl px-6 py-3 font-display text-xs font-bold tracking-[0.2em]">OPEN CHART</a>
+        </div>
+        <div class="glow-frame rounded-[28px] p-px">
+          <div class="overflow-hidden rounded-[27px] bg-[#041018]">
+            <div class="flex items-center gap-2 border-b border-neon/20 px-4 py-3">
+              <span class="h-2.5 w-2.5 rounded-full bg-neon shadow-glow"></span>
+              <span class="font-display text-[10px] uppercase tracking-[0.28em] text-ink/80">Dexscreener · Robinhood · $TITS</span>
+            </div>
+            <iframe
+              title="Dexscreener chart for TITS on Robinhood"
+              src="https://dexscreener.com/robinhood/TBA?embed=1&theme=dark&trades=0&info=0"
+              class="h-[480px] w-full bg-[#041018] md:h-[640px]"
+              loading="lazy"
+              allowfullscreen
+            ></iframe>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="relative z-10 border-t border-neon/20 bg-[#03101c]/85 px-4 py-12 backdrop-blur-md md:px-6">
+    <div class="mx-auto flex max-w-6xl flex-col items-center gap-6 text-center">
+      <img src="logo.png" alt="" class="h-16 w-16 rounded-2xl object-cover ring-2 ring-neon/70 shadow-glow">
+      <div>
+        <p class="font-display text-xl tracking-[0.22em] text-white">TITS</p>
+        <p class="mt-2 text-sm text-ink/80">Texas Institute Of Technology and Science</p>
+      </div>
+      <p class="max-w-xl text-sm text-white/70">Build the future. Break limits. Unleash tech chaos.</p>
+      <div class="flex items-center gap-3">
+        <a href="https://t.me/titselon" target="_blank" rel="noopener noreferrer" aria-label="Telegram">
+          <img src="tg.png" alt="" class="h-11 w-11 rounded-full object-cover transition hover:scale-110">
+        </a>
+        <a href="https://x.com/titselon" target="_blank" rel="noopener noreferrer" aria-label="X">
+          <img src="x.png" alt="" class="h-11 w-11 rounded-full object-cover ring-2 ring-white/15 transition hover:scale-110">
+        </a>
+      </div>
+      <p class="text-xs text-white/45">$TITS is a meme experiment on Robinhood Chain. Do your own research before you swap.</p>
+    </div>
+  </footer>
+
+  <script>
+    const CONTRACT = "TBA";
+
+    const caValue = document.getElementById("ca-value");
+    const copyButton = document.getElementById("copy-ca");
+    const copyStatus = document.getElementById("copy-status");
+    caValue.textContent = CONTRACT;
+
+    async function copyContract() {
+      try {
+        await navigator.clipboard.writeText(CONTRACT);
+      } catch (error) {
+        const area = document.createElement("textarea");
+        area.value = CONTRACT;
+        area.setAttribute("readonly", "");
+        area.style.position = "fixed";
+        area.style.left = "-9999px";
+        document.body.appendChild(area);
+        area.select();
+        document.execCommand("copy");
+        area.remove();
+      }
+      copyButton.textContent = "COPIED";
+      copyStatus.textContent = "Contract copied";
+      window.setTimeout(() => {
+        copyButton.textContent = "COPY CA";
+        copyStatus.textContent = "";
+      }, 1600);
+    }
+
+    copyButton.addEventListener("click", copyContract);
+
+    window.addEventListener("pointermove", (event) => {
+      document.documentElement.style.setProperty("--mx", event.clientX + "px");
+      document.documentElement.style.setProperty("--my", event.clientY + "px");
+    });
+  </script>
+</body>
+</html>
